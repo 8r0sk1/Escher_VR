@@ -26,7 +26,7 @@ public class MouseLook : MonoBehaviour
         cameraTilt -= mouseY; //aggiorno la variabile di rotazione della camera tilting
         cameraTilt = Mathf.Clamp(cameraTilt, -90f, 90f);
 
-        playerTransform.Rotate(Vector3.up * mouseX); //ruoto il player attorno all'asse y (alto)
+        playerTransform.RotateAround(playerTransform.position, playerTransform.up ,mouseX); //ruoto il player attorno all'asse y locale (alto)
         transform.localRotation = Quaternion.Euler(cameraTilt, 0, 0);
     }
 }
