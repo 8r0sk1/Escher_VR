@@ -19,7 +19,7 @@ public class UIadjust : MonoBehaviour
     void Update()
     {
         rotation = Vector3.SignedAngle(this.transform.up, axisReference.transform.up, axisReference.transform.right);
-        Debug.Log("Rotation = " + rotation);
+        //Debug.Log("Rotation = " + rotation);
 
         if (rotation != 0f)
             this.transform.RotateAround(this.transform.position, this.transform.right, rotation * rotationSpeed * Time.deltaTime);

@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour
         if (isGrounded && Input.GetButtonDown("Jump"))
         {
             velocity_y = Mathf.Sqrt(2f * -gravity * jumpHeight);
-            Debug.Log("velocity_up =" + velocity_y);
+            //Debug.Log("velocity_up =" + velocity_y);
 
             //imposto stato salto
             isJumping = true;
