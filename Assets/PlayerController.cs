@@ -23,12 +23,21 @@ public class PlayerController : MonoBehaviour
     private bool isChangingGravity = false;
 
     private float rotationGravity = 0f;
+    Vector3 rotationAxis;
+
+    public float controlRayMaxDistance;
+    //private float rotationGravity_x = 0f;
+    //private float rotationGravity_z = 0f;
+
     public float rotationSpeed;
+
+    [Header("Camera")]
+    private Camera playerCamera;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+        playerCamera = this.GetComponentInChildren<Camera>();
     }
 
     void moveY()
@@ -68,21 +77,36 @@ public class PlayerController : MonoBehaviour
     void gravityControl()
     {
 
-        if (Input.GetKeyDown(KeyCode.E) && !isChangingGravity){
-            velocity_y = 0;
-            isChangingGravity = true;
-            rotationGravity = 90f;
+        if (Input.GetKeyUp(KeyCode.Mouse1) && !isChangingGravity)
+        {
+            //lancio un raggio che incide con il "ground" layer
+            RaycastHit hit;
+            Ray gRay = new Ray(playerCamera.transform.position,playerCamera.transform.forward);
+
+            if (Physics.Raycast(gRay, out hit, controlRayMaxDistance, groundMask))
+            {
+                velocity_y = 0;
+                isChangingGravity = true;
+
+                rotationAxis = Vector3.Cross(this.transform.up, hit.normal);
+                rotationGravity = Vector3.SignedAngle(this.transform.up, hit.normal, rotationAxis);
+
+                Debug.DrawRay(this.transform.position, rotationAxis, Color.green, 5);
+                Debug.DrawRay(hit.point, hit.normal, Color.green, 5);
+            }
         }
 
         if (isChangingGravity)
         {
             float rotationStep = rotationGravity * rotationSpeed * Time.deltaTime;
-            transform.RotateAround(transform.position, Vector3.forward, rotationStep);
+            transform.RotateAround(transform.position, rotationAxis, rotationStep);
             rotationGravity -= rotationStep;
 
-            if (rotationGravity <= 0.5f)
+            Debug.Log("step = " + rotationStep);
+
+            if (Mathf.Abs(rotationGravity) <= 0.5f)
             {
-                transform.RotateAround(transform.position, Vector3.forward, rotationGravity);
+                transform.RotateAround(transform.position, rotationAxis, rotationGravity);
                 isChangingGravity = false;
             }
         }

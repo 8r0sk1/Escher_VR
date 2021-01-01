@@ -6,6 +6,7 @@ public class Interaction : MonoBehaviour
 {
     public LayerMask interactableMask;
     public LayerMask targetableMask;
+    public LayerMask groundMask;
     public GameObject viewfinder;
     public float interactableRayMaxDistance;
     private SpriteRenderer viewfinder_renderer;
@@ -27,6 +28,8 @@ public class Interaction : MonoBehaviour
             viewfinder_renderer.color = Color.red;
         else if (Physics.Raycast(viewRay, out hit, Mathf.Infinity, targetableMask))
             viewfinder_renderer.color = Color.blue;
+        else if (Physics.Raycast(viewRay, out hit, Mathf.Infinity, groundMask))
+            viewfinder_renderer.color = Color.green;
         else viewfinder_renderer.color = Color.white;
 
     }
