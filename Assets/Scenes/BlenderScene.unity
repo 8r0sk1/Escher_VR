@@ -742,7 +742,8 @@ MonoBehaviour:
     m_Bits: 256
   groundCheck: {fileID: 2096144077}
   groundDistance: 0.4
-  rotationSpeed: 5
+  controlRayMaxDistance: 1000
+  rotationSpeed: 1.5
 --- !u!143 &1093836375
 CharacterController:
   m_ObjectHideFlags: 0
@@ -768,7 +769,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1093836373}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.70710677, z: 0, w: 0.70710677}
   m_LocalPosition: {x: 0, y: 4.19, z: -6.49}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1191,6 +1192,9 @@ MonoBehaviour:
   targetableMask:
     serializedVersion: 2
     m_Bits: 1024
+  groundMask:
+    serializedVersion: 2
+    m_Bits: 256
   viewfinder: {fileID: 442395957}
   interactableRayMaxDistance: 5
 --- !u!114 &2108072076
