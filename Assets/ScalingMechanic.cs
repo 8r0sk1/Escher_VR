@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class ScalingMechanic : MonoBehaviour
 {
+
     [Header("Components")]
     public Transform target;            // The target object we picked up for scaling
-    private Collider col;
 
     [Header("Parameters")]
     public LayerMask targetMask;        // The layer mask used to hit only potential targets with a raycast
@@ -22,17 +22,12 @@ public class ScalingMechanic : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
+
     void Update()
     {
         HandleInput();
         ResizeTarget();
     }
-
-    /*
-    void FixedUpdate()
-    {
-        ResizeTarget();
-    } */
 
     void HandleInput()
     {
@@ -48,12 +43,9 @@ public class ScalingMechanic : MonoBehaviour
                 {
                     // Set our target variable to be the Transform object we hit with our raycast
                     target = hit.transform;
-                    col = target.GetComponent<Collider>();
 
                     // Disable physics for the object
                     target.GetComponent<Rigidbody>().isKinematic = true;
-                    //target.GetComponent<Rigidbody>().useGravity = false;
-                    //target.GetComponent<Rigidbody>().freezeRotation = true;
 
                     // Calculate the distance between the camera and the object
                     originalDistance = Vector3.Distance(transform.position, target.position);
@@ -70,8 +62,6 @@ public class ScalingMechanic : MonoBehaviour
             {
                 // Reactivate physics for the target object
                 target.GetComponent<Rigidbody>().isKinematic = false;
-                //target.GetComponent<Rigidbody>().useGravity = true;
-                //target.GetComponent<Rigidbody>().freezeRotation = false;
 
                 // Set our target variable to null
                 target = null;
@@ -95,50 +85,7 @@ public class ScalingMechanic : MonoBehaviour
         {
             // Set the new position of the target by getting the hit point and moving it back a bit
             // depending on the scale and offset factor
-
-            //target.position = (hit.point - transform.forward * offsetFactor * targetScale.x);
-            //target.GetComponent<Rigidbody>().MovePosition(hit.point + hit.normal * offsetFactor * targetScale.x);
-
-            //target.position = (hit.point + hit.normal * offsetFactor * targetScale.x);
-            //target.GetComponent<Rigidbody>().MovePosition(new_pos);
-
-            // DA FARE CONTROLLO SULLA COLLISIONE TRA OGGETTO E ALTRO
-
-            Vector3 adjust_position = Vector3.zero;
-            RaycastHit obj_hit;
-            if (Physics.Raycast(target.position, target.right, out obj_hit, col.bounds.extents.x, ignoreTargetMask))
-            {
-                adjust_position.x += col.bounds.size.x - (target.position - obj_hit.point).magnitude;
-                Debug.DrawLine(target.position,obj_hit.point, Color.yellow);
-            }
-            if (Physics.Raycast(target.position, target.up, out obj_hit, col.bounds.extents.y, ignoreTargetMask))
-            {
-                adjust_position.y += col.bounds.size.y - (target.position - obj_hit.point).magnitude;
-                Debug.DrawLine(target.position, obj_hit.point, Color.yellow);
-            }
-            if (Physics.Raycast(target.position, target.forward, out obj_hit, col.bounds.extents.z, ignoreTargetMask))
-            {
-                adjust_position.z += col.bounds.size.z - (target.position - obj_hit.point).magnitude;
-                Debug.DrawLine(target.position, obj_hit.point, Color.yellow);
-            }
-            if (Physics.Raycast(target.position, -target.right, out obj_hit, col.bounds.extents.x, ignoreTargetMask))
-            {
-                adjust_position.x += col.bounds.size.x - (target.position - obj_hit.point).magnitude;
-                Debug.DrawLine(target.position, obj_hit.point, Color.yellow);
-            }
-            if (Physics.Raycast(target.position, -target.up, out obj_hit, col.bounds.extents.y, ignoreTargetMask))
-            {
-                adjust_position.y += col.bounds.size.y - (target.position - obj_hit.point).magnitude;
-                Debug.DrawLine(target.position, obj_hit.point, Color.yellow);
-            }
-            if (Physics.Raycast(target.position, -target.forward, out obj_hit, col.bounds.extents.z, ignoreTargetMask))
-            {
-                adjust_position.z += col.bounds.size.z - (target.position - obj_hit.point).magnitude;
-                Debug.DrawLine(target.position, obj_hit.point, Color.yellow);
-            }
-
-            target.position = (hit.point - transform.forward * offsetFactor * targetScale.x) - adjust_position;
-            ///////////////////////////////////////////////////////////////
+            target.position = hit.point - transform.forward * offsetFactor * targetScale.x;
 
             // Calculate the current distance between the camera and the target object
             float currentDistance = Vector3.Distance(transform.position, target.position);
