@@ -6,7 +6,9 @@ public class PlayerController_rigidBody : MonoBehaviour
 {
     [Header("X and Z axis")]
     public Rigidbody controller;
-    public float speed = 10;
+    public float speed = 1;
+    public float scaleSpeed = 1;
+    private float speedFactor = 10;
 
     [Header("Y axis")]
     public float jumpHeight = 2;
@@ -14,10 +16,17 @@ public class PlayerController_rigidBody : MonoBehaviour
     private float velocity_y;
     private bool isJumping;
     public LayerMask groundMask;
+    public LayerMask stairMask;
     public Transform groundCheck;
     public float groundDistance = 0.4f;
 
+    [Header("StairsControl")]
+    //private Collider col;
+    public float stairDistance;
+    public float stairAngle;
+    private bool isOnStair;
     private bool isGrounded;
+    Vector3 stairMove;
 
     [Header("Gravity")]
     private bool isChangingGravity = false;
@@ -38,22 +47,15 @@ public class PlayerController_rigidBody : MonoBehaviour
     void Start()
     {
         playerCamera = this.GetComponentInChildren<Camera>();
+        //col = this.GetComponentInChildren<Collider>();
     }
 
-    void move()
+    void jumpControl()
     {
-        Vector3 moveXZ;
-
-        ////XZ AXIS////
-        float x = Input.GetAxis("Horizontal"); //asse a e d (in unity asse x)
-        float z = Input.GetAxis("Vertical"); // asse w ed s (in unity asse z)
-
-        moveXZ = (transform.right * x + transform.forward * z) * speed/10;
-
-        ////Y AXIS////
         //Grouncheck e controllo jump
         isGrounded = Physics.CheckBox(groundCheck.position, Vector3.one * groundDistance, Quaternion.identity, groundMask);
 
+        if(isOnStair) velocity_y = 0; //controllo se è sulle scale così da evitare scivolamento
         if (isGrounded && !Input.GetButtonDown("Jump") && !isJumping) velocity_y = 0; //controllo stato salto perchè non venga bloccato da collider circostanti
         if (isGrounded && Input.GetButtonDown("Jump"))
         {
@@ -71,9 +73,59 @@ public class PlayerController_rigidBody : MonoBehaviour
             isJumping = false;
         }
 
+        //if (isOnStair) isGrounded = true;
+    }
+
+    void stairControl()
+    {
+        RaycastHit hit;
+        Ray stairRay = new Ray(groundCheck.transform.position, -groundCheck.transform.up);
+
+        if (Physics.Raycast(stairRay, out hit, stairDistance, stairMask))
+        {
+            float dotResult = Vector3.Dot(hit.normal, groundCheck.transform.up);
+            Debug.Log("dotResult: " + dotResult + "\n");
+
+            float angle = Mathf.Acos(dotResult);
+            Debug.Log("angle: " + angle + "\n");
+
+            if (angle < 90-stairAngle)
+            {
+            /*    if (!isOnStair)
+                {
+                    Vector3 stairVector = Quaternion.AngleAxis(angle, transform.up) * transform.forward;
+                    stairMove = transform.up * scaleSpeed / speedFactor * dotResult;
+                }
+                else stairMove = Vector3.zero;*/
+                isOnStair = true;
+                //Debug.Log("isOnStair\n");
+            }
+        }
+        else
+        {
+            //stairMove = Vector3.zero;
+            isOnStair = false;
+            //Debug.Log("isOnNotStair\n");
+        }
+    }
+
+    void move()
+    {
+        Vector3 moveXZ;
+
+        ////XZ AXIS////
+        float x = Input.GetAxis("Horizontal"); //asse a e d (in unity asse x)
+        float z = Input.GetAxis("Vertical"); // asse w ed s (in unity asse z)
+
+        moveXZ = (transform.right * x + transform.forward * z) * speed/speedFactor;
+
+        ////Y AXIS////
+        jumpControl();
+        stairControl();
+
         //applico gravità
-        velocity_y += gravity * Time.deltaTime;
-        Vector3 moveY = transform.up * velocity_y * Time.deltaTime;
+        if(!isOnStair)velocity_y += gravity * Time.deltaTime;
+        Vector3 moveY = transform.up * velocity_y * Time.deltaTime + stairMove;
 
         //calcolo vettore di spostamento totale
         Vector3 move = moveXZ + moveY;
