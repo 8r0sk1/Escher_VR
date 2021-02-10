@@ -7,7 +7,7 @@ public class PlayerController_rigidBody : MonoBehaviour
     [Header("X and Z axis")]
     public Rigidbody controller;
     public float speed = 1;
-    public float scaleSpeed = 1;
+    //public float scaleSpeed = 1;
     private float speedFactor = 10;
 
     [Header("Y axis")]
@@ -53,11 +53,10 @@ public class PlayerController_rigidBody : MonoBehaviour
     void jumpControl()
     {
         //Grouncheck e controllo jump
-        isGrounded = Physics.CheckBox(groundCheck.position, Vector3.one * groundDistance, Quaternion.identity, groundMask);
+        isGrounded = Physics.CheckBox(groundCheck.position, Vector3.one * groundDistance, Quaternion.identity, groundMask) || isOnStair; //controllo se è anche sulle scale (coem fosse grounded)
 
-        if(isOnStair) velocity_y = 0; //controllo se è sulle scale così da evitare scivolamento
-        if (isGrounded && !Input.GetButtonDown("Jump") && !isJumping) velocity_y = 0; //controllo stato salto perchè non venga bloccato da collider circostanti
-        if (isGrounded && Input.GetButtonDown("Jump"))
+        if (isGrounded && !Input.GetButton("Jump") && !isJumping) velocity_y = 0; //controllo stato salto perchè non venga bloccato da collider circostanti
+        if (isGrounded && Input.GetButton("Jump"))
         {
             velocity_y = Mathf.Sqrt(2f * -gravity * jumpHeight);
 
@@ -123,8 +122,10 @@ public class PlayerController_rigidBody : MonoBehaviour
         jumpControl();
         stairControl();
 
+        if (isOnStair && velocity_y < 0) velocity_y = 0; //controllo se è sulle scale così da evitare scivolamento
+
         //applico gravità
-        if(!isOnStair)velocity_y += gravity * Time.deltaTime;
+        if (!isOnStair)velocity_y += gravity * Time.deltaTime;
         Vector3 moveY = transform.up * velocity_y * Time.deltaTime + stairMove;
 
         //calcolo vettore di spostamento totale
@@ -137,6 +138,15 @@ public class PlayerController_rigidBody : MonoBehaviour
         controller.MovePosition(new_pos);
     }
 
+    void FixedUpdate()
+    {
+        if (!isChangingGravity)
+        {
+            move();
+        }
+    }
+
+
     void gravityControl()
     {
 
@@ -144,7 +154,7 @@ public class PlayerController_rigidBody : MonoBehaviour
         {
             //lancio un raggio che incide con il "ground" layer
             RaycastHit hit;
-            Ray gRay = new Ray(playerCamera.transform.position,playerCamera.transform.forward);
+            Ray gRay = new Ray(playerCamera.transform.position, playerCamera.transform.forward);
 
             if (Physics.Raycast(gRay, out hit, controlRayMaxDistance, groundMask))
             {
@@ -176,18 +186,6 @@ public class PlayerController_rigidBody : MonoBehaviour
             }
         }
 
-    }
-
-    /// <summary>
-    /// ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    /// </summary>
-
-    void FixedUpdate()
-    {
-        if (!isChangingGravity)
-        {
-            move();
-        }
     }
 
     // Update is called once per frame
