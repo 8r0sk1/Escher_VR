@@ -7,7 +7,8 @@ public class PlayerController_rigidBody : MonoBehaviour
     [Header("X and Z axis")]
     public Rigidbody controller;
     public float speed = 1;
-    //public float scaleSpeed = 1;
+    public float scaleSpeed = 1;
+    private float originalSpeed;
     private float speedFactor = 10;
 
     [Header("Y axis")]
@@ -48,6 +49,8 @@ public class PlayerController_rigidBody : MonoBehaviour
     {
         playerCamera = this.GetComponentInChildren<Camera>();
         //col = this.GetComponentInChildren<Collider>();
+
+        originalSpeed = speed;
     }
 
     void jumpControl()
@@ -97,6 +100,7 @@ public class PlayerController_rigidBody : MonoBehaviour
                 }
                 else stairMove = Vector3.zero;*/
                 isOnStair = true;
+                speed = scaleSpeed;
                 //Debug.Log("isOnStair\n");
             }
         }
@@ -104,6 +108,7 @@ public class PlayerController_rigidBody : MonoBehaviour
         {
             //stairMove = Vector3.zero;
             isOnStair = false;
+            speed = originalSpeed;
             //Debug.Log("isOnNotStair\n");
         }
     }
