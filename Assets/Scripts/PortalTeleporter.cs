@@ -12,10 +12,10 @@ public class PortalTeleporter : MonoBehaviour
     {
         if (playerIsOverlapping)
         {
+            //Debug.Log("Overlapping " + this.name);
             //controllo che il player entri dalla parte giusta del portale
             Vector3 portalToPlayer = player.position - transform.position;
             float dotProduct = Vector3.Dot(transform.up, portalToPlayer);
-            Debug.Log("Teleporting: "+dotProduct);
 
             if (dotProduct < 0f)
             {
@@ -26,7 +26,6 @@ public class PortalTeleporter : MonoBehaviour
 
                 Vector3 positionOffset = Quaternion.Euler(0f, rotationDiff, 0f) * portalToPlayer;
                 player.position = reciever.position + positionOffset;
-                Debug.Log("Player.position after teleport: " + player.position);
 
                 playerIsOverlapping = false;
             }
@@ -37,8 +36,18 @@ public class PortalTeleporter : MonoBehaviour
     {
         if(other.tag == "Player")
         {
-            Debug.Log("Portal triggered\n");
+            //Debug.Log("Portal triggered\n");
             playerIsOverlapping = true;
+
+        }
+    }
+    void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            //Debug.Log("Portal triggered\n");
+            playerIsOverlapping = false;
+
         }
     }
 }
