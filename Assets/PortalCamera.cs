@@ -14,7 +14,7 @@ public class PortalCamera : MonoBehaviour
         //calcolo la posizione che ha di distanza il player dal portale che ha davanti
         Vector3 playerOffsetFromPortal = playerCamera.position - otherPortal.position;
         //sposto la camera che guarda il portale nella stessa posizione da cui osserva il player
-        transform.position = portal.position + playerOffsetFromPortal;
+        transform.position =( portal.position + playerOffsetFromPortal );
 
         //calcolo l'angolazione che il player ha rispetto al portale
         float angularDifferenceBetweenPortalRotations = Quaternion.Angle(portal.rotation,otherPortal.rotation);
