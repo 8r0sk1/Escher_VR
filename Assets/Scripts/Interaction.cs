@@ -30,6 +30,8 @@ public class Interaction : MonoBehaviour
             viewfinder_renderer.color = Color.blue;
         else if (Physics.Raycast(viewRay, out hit, Mathf.Infinity, groundMask))
             viewfinder_renderer.color = Color.green;
+        else if (Physics.Raycast(viewRay, out hit, Mathf.Infinity, groundMask))
+            viewfinder_renderer.color = Color.yellow;
         else viewfinder_renderer.color = Color.white;
 
     }
