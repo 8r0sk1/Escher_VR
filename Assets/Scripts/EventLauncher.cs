@@ -17,6 +17,5 @@ public class EventLauncher : MonoBehaviour
     void OnTriggerEnter()
     {
         EventToFire(this, EventArgs.Empty);
-        Debug.Log("play_1 completed\n");
     }
 }
