@@ -14,8 +14,17 @@ public class EventLauncher : MonoBehaviour
 
     }
 
-    void OnTriggerEnter()
+    void OnCollisionStay(Collision col)
     {
-        EventToFire(this, EventArgs.Empty);
+        GameObject obj = col.gameObject;
+        if (obj.CompareTag("Room2obj"))
+        {
+            EventToFire(this, EventArgs.Empty);
+            obj.GetComponent<Renderer>().material.color = Color.blue;
+        }
+        else
+        {
+            obj.GetComponent<Renderer>().material.color = Color.red;
+        }
     }
 }
