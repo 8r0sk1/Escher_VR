@@ -30,12 +30,12 @@ public class PlayerController_rigidBody : MonoBehaviour
     Vector3 stairMove;
 
     [Header("Gravity")]
-    private bool isChangingGravity = false;
-
-    private float rotationGravity = 0f;
-    Vector3 rotationAxis;
-
     public float controlRayMaxDistance;
+
+    private bool isChangingGravity = false;
+    private float rotationGravity = 0f;
+
+    Vector3 rotationAxis;
     //private float rotationGravity_x = 0f;
     //private float rotationGravity_z = 0f;
 
@@ -86,10 +86,10 @@ public class PlayerController_rigidBody : MonoBehaviour
         if (Physics.Raycast(stairRay, out hit, stairDistance, stairMask))
         {
             float dotResult = Vector3.Dot(hit.normal, groundCheck.transform.up);
-            Debug.Log("dotResult: " + dotResult + "\n");
+            //Debug.Log("dotResult: " + dotResult + "\n");
 
             float angle = Mathf.Acos(dotResult);
-            Debug.Log("angle: " + angle + "\n");
+            //Debug.Log("angle: " + angle + "\n");
 
             if (angle < 90-stairAngle)
             {
@@ -181,7 +181,7 @@ public class PlayerController_rigidBody : MonoBehaviour
             transform.RotateAround(transform.position, rotationAxis, rotationStep);
             rotationGravity -= rotationStep;
 
-            Debug.Log("step = " + rotationStep);
+            //Debug.Log("step = " + rotationStep);
 
             if (Mathf.Abs(rotationGravity) <= 0.5f)
             {

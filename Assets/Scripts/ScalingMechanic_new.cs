@@ -10,6 +10,7 @@ public class ScalingMechanic_new : MonoBehaviour
     private float originalMass;
 
     [Header("Parameters")]
+    public float pickUpDistance;
     public LayerMask targetMask;        // The layer mask used to hit only potential targets with a raycast
     public LayerMask ignoreTargetMask;  // The layer mask used to ignore the player and target objects while raycasting
     public float offsetFactor;          // The offset amount for positioning the object so it doesn't clip into walls
@@ -96,7 +97,7 @@ public class ScalingMechanic_new : MonoBehaviour
         // Cast a ray forward from the camera position, ignore the layer that is used to acquire targets
         // so we don't hit the attached target with our ray
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, transform.forward, out hit, Mathf.Infinity, ignoreTargetMask))
+        if (Physics.Raycast(transform.position, transform.forward, out hit, pickUpDistance, ignoreTargetMask))
         {
             //controllo se la posizione non è aggiustata
             if (!isAdjusted)

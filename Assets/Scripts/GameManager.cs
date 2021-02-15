@@ -4,18 +4,25 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 
-enum state { play_1, play_2, play_3, finish, pause};
+enum state { play_1, play_2, play_3, finish, pause };
 
 public class GameManager : MonoBehaviour
 {
+    public GameObject Portal_in0_A;
+    public GameObject Portal_in0_B;
+    public GameObject Portal_out0_A;
+    public GameObject Portal_out0_B;
+
     public GameObject Portal_in1_A;
     public GameObject Portal_in1_B;
     public GameObject Portal_out1_A;
     public GameObject Portal_out1_B;
+
     public GameObject Portal_in2_A;
     public GameObject Portal_in2_B;
     public GameObject Portal_out2_A;
     public GameObject Portal_out2_B;
+
     //public GameObject Portal_in3_A;
     //public GameObject Portal_in3_B;
 
@@ -44,9 +51,15 @@ public class GameManager : MonoBehaviour
         //room3_completed.EventToFire += OnEventReceived_room3; //mi sottoscrivo all'evento --> divento LISTENER
 
         Portal_in2_A.SetActive(false);
+
+        Portal_out2_A.SetActive(false);
         Portal_out2_B.SetActive(false);
 
         Portal_out1_B.SetActive(false);
+
+        Portal_out0_A.SetActive(false);
+        Portal_out0_B.SetActive(false);
+
     }
 
     private void OnEventReceived_room1(object sender, EventArgs args)
@@ -69,8 +82,12 @@ public class GameManager : MonoBehaviour
         Portal_in2_A.GetComponent<Renderer>().material.color = Color.blue;
         Portal_in2_B.GetComponent<Renderer>().material.color = Color.blue;
 
+        Portal_out2_A.SetActive(true);
         Portal_out2_B.SetActive(true);
         Portal_out2_B.GetComponent<Renderer>().material.color = Color.blue;
+
+        Portal_out0_A.SetActive(true);
+        Portal_out0_B.SetActive(true);
 
         currentState = state.play_3;
     }

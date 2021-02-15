@@ -9,6 +9,8 @@ public class Interaction : MonoBehaviour
     public LayerMask groundMask;
     public GameObject viewfinder;
     public float interactableRayMaxDistance;
+    public float controlRayMaxDistance;
+    public float pickUpRayMaxDistance;
     private SpriteRenderer viewfinder_renderer;
 
     // Start is called before the first frame update
@@ -26,12 +28,10 @@ public class Interaction : MonoBehaviour
 
         if (Physics.Raycast(viewRay, out hit, interactableRayMaxDistance, interactableMask))
             viewfinder_renderer.color = Color.red;
-        else if (Physics.Raycast(viewRay, out hit, Mathf.Infinity, targetableMask))
+        else if (Physics.Raycast(viewRay, out hit, pickUpRayMaxDistance, targetableMask))
             viewfinder_renderer.color = Color.blue;
-        else if (Physics.Raycast(viewRay, out hit, Mathf.Infinity, groundMask))
+        else if (Physics.Raycast(viewRay, out hit, controlRayMaxDistance, groundMask))
             viewfinder_renderer.color = Color.green;
-        else if (Physics.Raycast(viewRay, out hit, Mathf.Infinity, groundMask))
-            viewfinder_renderer.color = Color.yellow;
         else viewfinder_renderer.color = Color.white;
 
     }
