@@ -14,6 +14,11 @@ public class EventLauncher : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        EventToFire(this, EventArgs.Empty);
+    }
+
     void OnCollisionStay(Collision col)
     {
         GameObject obj = col.gameObject;
