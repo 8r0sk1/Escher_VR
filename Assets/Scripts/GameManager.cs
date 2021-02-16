@@ -96,6 +96,8 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("play_3 --> finish\n");
 
+        
+
         currentState = state.finish;
         //DO SOMETHING
     }
