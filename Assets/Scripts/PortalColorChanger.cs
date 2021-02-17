@@ -5,6 +5,7 @@ using UnityEngine;
 public class PortalColorChanger : MonoBehaviour
 {
     public GameObject otherPortal;
+    public Material bMat;
 
     private Renderer renderer;
 
@@ -17,6 +18,6 @@ public class PortalColorChanger : MonoBehaviour
     // Update is called once per frame
     void OnTriggerEnter()
     {
-        renderer.material.color = Color.blue;
+        renderer.material = bMat;
     }
 }

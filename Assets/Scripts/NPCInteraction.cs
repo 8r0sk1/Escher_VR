@@ -6,6 +6,10 @@ public class NPCInteraction : MonoBehaviour
 {
     private Animator animator;
 
+    private bool isPainted;
+    public GameObject sheet;
+    public Material paintMat;
+
     public LayerMask interactableMask;
     public Camera playerCamera;
     public float triggerDistance;
@@ -23,6 +27,15 @@ public class NPCInteraction : MonoBehaviour
             if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, triggerDistance, interactableMask))
             {
                 animator.SetTrigger("interactionTrigger");
+                if (!isPainted)
+                {
+                    sheet.GetComponent<Renderer>().material = paintMat;
+                    isPainted = true;
+                }
+                else
+                {
+                    isPainted = false;
+                }
             }
         }
     }

@@ -30,6 +30,8 @@ public class GameManager : MonoBehaviour
     public GameObject eventLauncherGO_room2;
     public GameObject eventLauncherGO_finish;
 
+    public Material bMat;
+
     private EventLauncher room1_completed;
     private EventLauncher room2_completed;
     private EventLauncher finish;
@@ -65,10 +67,10 @@ public class GameManager : MonoBehaviour
     private void OnEventReceived_room1(object sender, EventArgs args)
     {
         Debug.Log("play_1 --> play_2\n");
-        Portal_in1_A.GetComponent<Renderer>().material.color = Color.blue;
-        Portal_in1_B.GetComponent<Renderer>().material.color = Color.blue;
-        Portal_out1_A.GetComponent<Renderer>().material.color = Color.blue;
-        Portal_out1_B.GetComponent<Renderer>().material.color = Color.blue;
+        Portal_in1_A.GetComponent<Renderer>().material = bMat;
+        Portal_in1_B.GetComponent<Renderer>().material = bMat;
+        Portal_out1_A.GetComponent<Renderer>().material = bMat;
+        Portal_out1_B.GetComponent<Renderer>().material = bMat;
 
         Portal_in2_A.SetActive(true);
         Portal_out1_B.SetActive(true);
@@ -79,12 +81,12 @@ public class GameManager : MonoBehaviour
     private void OnEventReceived_room2(object sender, EventArgs args)
     {
         Debug.Log("play_2 --> play_3\n");
-        Portal_in2_A.GetComponent<Renderer>().material.color = Color.blue;
-        Portal_in2_B.GetComponent<Renderer>().material.color = Color.blue;
+        Portal_in2_A.GetComponent<Renderer>().material = bMat;
+        Portal_in2_B.GetComponent<Renderer>().material = bMat;
 
         Portal_out2_A.SetActive(true);
         Portal_out2_B.SetActive(true);
-        Portal_out2_B.GetComponent<Renderer>().material.color = Color.blue;
+        Portal_out2_B.GetComponent<Renderer>().material = bMat;
 
         Portal_out0_A.SetActive(true);
         Portal_out0_B.SetActive(true);

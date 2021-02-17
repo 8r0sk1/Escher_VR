@@ -3,7 +3,23 @@ guid: 99edd7a379784444790410fa7d6179c8
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - Portal_in0_A: {instanceID: 0}
+  - Portal_in0_B: {instanceID: 0}
+  - Portal_out0_A: {instanceID: 0}
+  - Portal_out0_B: {instanceID: 0}
+  - Portal_in1_A: {instanceID: 0}
+  - Portal_in1_B: {instanceID: 0}
+  - Portal_out1_A: {instanceID: 0}
+  - Portal_out1_B: {instanceID: 0}
+  - Portal_in2_A: {instanceID: 0}
+  - Portal_in2_B: {instanceID: 0}
+  - Portal_out2_A: {instanceID: 0}
+  - Portal_out2_B: {instanceID: 0}
+  - eventLauncherGO_room1: {instanceID: 0}
+  - eventLauncherGO_room2: {instanceID: 0}
+  - eventLauncherGO_finish: {instanceID: 0}
+  - bMat: {fileID: 2100000, guid: 78b1ec9c8a53d53498c8507adcb66ac6, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

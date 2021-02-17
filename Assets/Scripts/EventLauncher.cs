@@ -8,6 +8,9 @@ public class EventLauncher : MonoBehaviour
 {
     public event EventHandler EventToFire;
 
+    public Material bMat;
+    public Material rMat;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -25,11 +28,11 @@ public class EventLauncher : MonoBehaviour
         if (obj.CompareTag("Room2obj"))
         {
             EventToFire(this, EventArgs.Empty);
-            obj.GetComponent<Renderer>().material.color = Color.blue;
+            obj.GetComponent<Renderer>().material = bMat;
         }
         else
         {
-            obj.GetComponent<Renderer>().material.color = Color.red;
+            obj.GetComponent<Renderer>().material = rMat;
         }
     }
 }
