@@ -5,10 +5,15 @@ using UnityEngine;
 public class NPCInteraction : MonoBehaviour
 {
     private Animator animator;
+    private Renderer renderer;
+    private Material baseMat;
 
-    private bool isPainted;
+    private bool toPaint = false;
     public GameObject sheet;
     public Material paintMat;
+    public Shader blendShader;
+    public float blendSpeed = 1;
+    private float alpha;
 
     public LayerMask interactableMask;
     public Camera playerCamera;
@@ -18,6 +23,13 @@ public class NPCInteraction : MonoBehaviour
     void Start()
     {
         animator = this.GetComponent<Animator>();
+        renderer = sheet.GetComponent<Renderer>();
+
+        renderer.material.shader = blendShader;
+
+        baseMat = renderer.material;
+
+        alpha = 0;
     }
 
     // Update is called once per frame
@@ -27,16 +39,14 @@ public class NPCInteraction : MonoBehaviour
             if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, triggerDistance, interactableMask))
             {
                 animator.SetTrigger("interactionTrigger");
-                if (!isPainted)
-                {
-                    sheet.GetComponent<Renderer>().material = paintMat;
-                    isPainted = true;
-                }
-                else
-                {
-                    isPainted = false;
-                }
+                toPaint = !toPaint;
             }
+        }
+        if (toPaint)
+        {
+            alpha = Mathf.Clamp(alpha + blendSpeed * Time.deltaTime, 0, 1);
+            renderer.material.SetFloat("_Blend", alpha);
+            if (alpha > 0.99f) toPaint = false;
         }
     }
 }
