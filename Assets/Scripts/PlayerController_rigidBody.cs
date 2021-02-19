@@ -1,9 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using System;
 
 public class PlayerController_rigidBody : MonoBehaviour
 {
+    public GameObject eventLauncherGO_start;
+    private EventLauncher start_completed;
+
     [Header("X and Z axis")]
     public Rigidbody controller;
     public float speed = 1;
@@ -32,6 +37,7 @@ public class PlayerController_rigidBody : MonoBehaviour
     [Header("Gravity")]
     public float controlRayMaxDistance;
 
+    private bool canChangeGravity = false;
     private bool isChangingGravity = false;
     private float rotationGravity = 0f;
 
@@ -47,10 +53,19 @@ public class PlayerController_rigidBody : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //setto listener
+        start_completed = eventLauncherGO_start.GetComponent<EventLauncher>();
+        start_completed.EventToFire += OnEventReceived_canChangeGravity; //mi sottoscrivo all'evento --> divento LISTENER
+
         playerCamera = this.GetComponentInChildren<Camera>();
         //col = this.GetComponentInChildren<Collider>();
 
         originalSpeed = speed;
+    }
+
+    void OnEventReceived_canChangeGravity(object sender, EventArgs args)
+    {
+        canChangeGravity = true;
     }
 
     void jumpControl()
@@ -196,6 +211,6 @@ public class PlayerController_rigidBody : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        gravityControl();
+        if(canChangeGravity) gravityControl();
     }
 }

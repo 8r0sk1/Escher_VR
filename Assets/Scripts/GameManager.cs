@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using System;
 
-enum state { play_1, play_2, play_3, finish, pause };
+enum state { play_1, play_2, start, finish };
 
 public class GameManager : MonoBehaviour
 {
+   // public event EventHandler EventToFire;
+
     public GameObject Portal_in0_A;
     public GameObject Portal_in0_B;
     public GameObject Portal_out0_A;
@@ -28,20 +30,20 @@ public class GameManager : MonoBehaviour
 
     public GameObject eventLauncherGO_room1; //gameobject da cui proviene l'evento
     public GameObject eventLauncherGO_room2;
-    public GameObject eventLauncherGO_finish;
+    public GameObject eventLauncherGO_start;
 
     public Material bMat;
 
     private EventLauncher room1_completed;
     private EventLauncher room2_completed;
-    private EventLauncher finish;
+    private EventLauncher start_completed;
 
     private state currentState;
 
     // Start is called before the first frame update
     void Start()
     {
-        currentState = state.play_1;
+        currentState = state.start;
 
         room1_completed = eventLauncherGO_room1.GetComponent<EventLauncher>();
         room1_completed.EventToFire += OnEventReceived_room1; //mi sottoscrivo all'evento --> divento LISTENER
@@ -49,8 +51,8 @@ public class GameManager : MonoBehaviour
         room2_completed = eventLauncherGO_room2.GetComponent<EventLauncher>();
         room2_completed.EventToFire += OnEventReceived_room2; //mi sottoscrivo all'evento --> divento LISTENER
 
-        //room3_completed = eventLauncherGO_room3.GetComponent<EventLauncher>();
-        //room3_completed.EventToFire += OnEventReceived_room3; //mi sottoscrivo all'evento --> divento LISTENER
+        //start_completed = eventLauncherGO_start.GetComponent<EventLauncher>();
+        //start_completed.EventToFire += OnEventReceived_start; //mi sottoscrivo all'evento --> divento LISTENER
 
         Portal_in2_A.SetActive(false);
 
@@ -63,6 +65,15 @@ public class GameManager : MonoBehaviour
         Portal_out0_B.SetActive(false);
 
     }
+
+    /*private void OnEventReceived_start(object sender, EventArgs args)
+    {
+        Debug.Log("start --> play_1\n");
+
+        EventToFire(this, EventArgs.Empty);
+
+        currentState = state.play_1;
+    }*/
 
     private void OnEventReceived_room1(object sender, EventArgs args)
     {
@@ -80,7 +91,7 @@ public class GameManager : MonoBehaviour
 
     private void OnEventReceived_room2(object sender, EventArgs args)
     {
-        Debug.Log("play_2 --> play_3\n");
+        Debug.Log("play_2 --> finish\n");
         Portal_in2_A.GetComponent<Renderer>().material = bMat;
         Portal_in2_B.GetComponent<Renderer>().material = bMat;
 
@@ -91,16 +102,6 @@ public class GameManager : MonoBehaviour
         Portal_out0_A.SetActive(true);
         Portal_out0_B.SetActive(true);
 
-        currentState = state.play_3;
-    }
-
-    private void OnEventReceived_room3(object sender, EventArgs args)
-    {
-        Debug.Log("play_3 --> finish\n");
-
-        
-
         currentState = state.finish;
-        //DO SOMETHING
     }
 }
