@@ -6,12 +6,14 @@ public class MouseLook : MonoBehaviour
 {
     public float mouseSensitivity = 100f;
     public Transform playerTransform;
-    private float cameraTilt = 0f;
+    private float cameraTilt;
 
     // Start is called before the first frame update
     void Start()
     {
+        Debug.Log("Camera initial rot: "+this.transform.rotation);
         Cursor.lockState = CursorLockMode.Locked; //blocca il cursore al centro dello schermo
+        cameraTilt = transform.localRotation.eulerAngles.x;
     }
 
     // Update is called once per frame
