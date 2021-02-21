@@ -104,7 +104,7 @@ public class ScalingMechanic_new : MonoBehaviour
             {
                 //aggiusto la posizione
                 //rigidbody.MovePosition(hit.point + hit.normal * offsetFactor/2 * targetScale.x - transform.forward * offsetFactor * targetScale.x);
-                rigidbody.MovePosition(hit.point + hit.normal * offsetFactor * targetScale.x);
+                rigidbody.MovePosition(hit.point - transform.forward * offsetFactor * targetScale.x);
 
                 // Calculate the current distance between the camera and the target object
                 float currentDistance = Vector3.Distance(transform.position, target.position);

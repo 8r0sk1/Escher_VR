@@ -37,7 +37,7 @@ public class PlayerController_rigidBody : MonoBehaviour
     [Header("Gravity")]
     public float controlRayMaxDistance;
 
-    private bool canChangeGravity = true;
+    public bool canChangeGravity = true;
     private bool isChangingGravity = false;
     private float rotationGravity = 0f;
 

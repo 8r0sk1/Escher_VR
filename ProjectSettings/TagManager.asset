@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Room2obj
+  - Room2
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Targetable
   - Stairs
   - PostProcessing
-  - 
+  - SnapTo
   - 
   - 
   - 

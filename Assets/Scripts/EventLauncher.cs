@@ -11,31 +11,46 @@ public class EventLauncher : MonoBehaviour
     public Material YESmat;
     public Material NOmat;
 
+    public GameObject room2obj;
+
+    private bool isRoom2;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        room2obj.GetComponent<MeshRenderer>().enabled = false;
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider col)
     {
-        EventToFire(this, EventArgs.Empty);
-    }
-
-    void OnCollisionStay(Collision col)
-    {
-        GameObject obj = col.gameObject;
-        if (obj.transform.localScale.x <= 0.20 && obj.transform.localScale.x >= 0.15)
+        isRoom2 = this.gameObject.name.Equals("EventLauncher_Room2");
+        if (!isRoom2)
         {
-            if (obj.CompareTag("Room2obj"))
+            EventToFire(this, EventArgs.Empty);
+        }
+    }
+
+    private void OnTriggerStay(Collider col)
+    {
+        if(isRoom2)
+        {
+            GameObject obj = col.gameObject;
+            //Debug.Log(obj.transform.localScale);
+            if (obj.transform.localScale.x >= 0.30 && obj.transform.localScale.x <= 0.50)
+            //if (true)
             {
-                EventToFire(this, EventArgs.Empty);
-                obj.GetComponent<Renderer>().material = YESmat;
-            }
-            else
-            {
-                obj.GetComponent<Renderer>().material = NOmat;
+                if (obj.CompareTag("Room2obj"))
+                {
+                    EventToFire(this, EventArgs.Empty);
+                    UnityEngine.Object.Destroy(obj);
+                    room2obj.GetComponent<MeshRenderer>().enabled = true;
+                }
+                else
+                {
+                    obj.GetComponent<Renderer>().material = NOmat;
+                }
             }
         }
     }
+
 }

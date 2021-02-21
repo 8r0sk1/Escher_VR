@@ -9,7 +9,7 @@ public class Interaction : MonoBehaviour
     public GameObject eventLauncherGO_start;
     private EventLauncher start_completed;
 
-    private bool isStarted = false;
+    public bool isStarted = true;
 
     public LayerMask interactableMask;
     public LayerMask targetableMask;
