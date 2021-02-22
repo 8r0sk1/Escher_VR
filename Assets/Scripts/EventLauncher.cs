@@ -8,7 +8,6 @@ public class EventLauncher : MonoBehaviour
 {
     public event EventHandler EventToFire;
 
-    public Material YESmat;
     public Material NOmat;
 
     public GameObject room2obj;
