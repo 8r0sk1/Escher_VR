@@ -35,7 +35,7 @@ public class EventLauncher : MonoBehaviour
         {
             GameObject obj = col.gameObject;
             //Debug.Log(obj.transform.localScale);
-            if (obj.transform.localScale.x >= 0.30 && obj.transform.localScale.x <= 0.50)
+            if (obj.transform.localScale.x >= 0.15 && obj.transform.localScale.x <= 0.30)
             //if (true)
             {
                 if (obj.CompareTag("Room2obj"))
