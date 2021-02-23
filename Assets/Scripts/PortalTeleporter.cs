@@ -10,7 +10,7 @@ public class PortalTeleporter : MonoBehaviour
     private bool playerIsOverlapping = false;
     void Update()
     {
-        if (playerIsOverlapping)
+        if (playerIsOverlapping && reciever != null)
         {
             //Debug.Log("Overlapping " + this.name);
             //controllo che il player entri dalla parte giusta del portale
