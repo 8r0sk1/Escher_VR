@@ -34,7 +34,7 @@ public class NPCInteraction : MonoBehaviour
 
         alpha = 0;
 
-        sound = gameObject.GetComponent<AudioSource>();
+        
     }
 
     // Update is called once per frame
@@ -52,7 +52,11 @@ public class NPCInteraction : MonoBehaviour
         {
             alpha = Mathf.Clamp(alpha + blendSpeed * Time.deltaTime, 0, 1);
             renderer.material.SetFloat("_Blend", alpha);
-            if (alpha > 0.99f) toPaint = false;
+            if (alpha > 0.99f)
+            {
+                toPaint = false;
+                sound.Stop();
+            }
         }
     }
 }
