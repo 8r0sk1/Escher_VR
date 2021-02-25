@@ -40,6 +40,7 @@ public class PlayerController_rigidBody : MonoBehaviour
     public bool canChangeGravity = true;
     private bool isChangingGravity = false;
     private float rotationGravity = 0f;
+    public AudioSource gravitySound;
 
     Vector3 rotationAxis;
     //private float rotationGravity_x = 0f;
@@ -187,6 +188,8 @@ public class PlayerController_rigidBody : MonoBehaviour
 
                 Debug.DrawRay(this.transform.position, rotationAxis, Color.green, 5);
                 Debug.DrawRay(hit.point, hit.normal, Color.green, 5);
+
+                gravitySound.Play();
             }
         }
 

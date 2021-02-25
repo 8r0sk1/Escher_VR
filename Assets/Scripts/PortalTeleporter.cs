@@ -7,6 +7,8 @@ public class PortalTeleporter : MonoBehaviour
     public Transform player;
     public Transform reciever;
 
+    public AudioSource portalSound;
+
     private bool playerIsOverlapping = false;
     void Update()
     {
@@ -16,6 +18,7 @@ public class PortalTeleporter : MonoBehaviour
             //controllo che il player entri dalla parte giusta del portale
             Vector3 portalToPlayer = player.position - transform.position;
             float dotProduct = Vector3.Dot(transform.up, portalToPlayer);
+            
 
             if (dotProduct < 0f)
             {
@@ -38,6 +41,7 @@ public class PortalTeleporter : MonoBehaviour
         {
             //Debug.Log("Portal triggered\n");
             playerIsOverlapping = true;
+            portalSound.Play();
 
         }
     }
