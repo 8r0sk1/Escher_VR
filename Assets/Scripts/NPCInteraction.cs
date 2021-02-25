@@ -19,6 +19,9 @@ public class NPCInteraction : MonoBehaviour
     public Camera playerCamera;
     public float triggerDistance;
 
+    public AudioSource sound;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -30,6 +33,8 @@ public class NPCInteraction : MonoBehaviour
         baseMat = renderer.material;
 
         alpha = 0;
+
+        sound = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -39,6 +44,7 @@ public class NPCInteraction : MonoBehaviour
             if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, triggerDistance, interactableMask))
             {
                 animator.SetTrigger("interactionTrigger");
+                sound.Play();
                 toPaint = !toPaint;
             }
         }
