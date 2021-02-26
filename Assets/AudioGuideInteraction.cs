@@ -14,6 +14,8 @@ public class AudioGuideInteraction : MonoBehaviour
 
     void Start()
     {
+        UIstop.SetActive(false);
+        UIstart.SetActive(false);
     }
 
     // Update is called once per frame
