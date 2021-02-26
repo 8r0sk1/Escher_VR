@@ -14,6 +14,7 @@ public class PortalTeleporter : MonoBehaviour
     {
         if (playerIsOverlapping && reciever != null)
         {
+            portalSound.Play();
             //Debug.Log("Overlapping " + this.name);
             //controllo che il player entri dalla parte giusta del portale
             Vector3 portalToPlayer = player.position - transform.position;
@@ -41,8 +42,6 @@ public class PortalTeleporter : MonoBehaviour
         {
             //Debug.Log("Portal triggered\n");
             playerIsOverlapping = true;
-            portalSound.Play();
-
         }
     }
     void OnTriggerExit(Collider other)

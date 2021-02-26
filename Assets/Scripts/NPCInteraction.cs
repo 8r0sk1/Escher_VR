@@ -9,6 +9,7 @@ public class NPCInteraction : MonoBehaviour
     private Material baseMat;
 
     private bool toPaint = false;
+    private bool isDrawing = false;
     public GameObject sheet;
     public Material paintMat;
     public Shader blendShader;
@@ -44,8 +45,10 @@ public class NPCInteraction : MonoBehaviour
             if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, triggerDistance, interactableMask))
             {
                 animator.SetTrigger("interactionTrigger");
-                sound.Play();
+                isDrawing = !isDrawing;
                 toPaint = !toPaint;
+                if (isDrawing) sound.Play();
+                else sound.Stop();
             }
         }
         if (toPaint)
@@ -55,7 +58,6 @@ public class NPCInteraction : MonoBehaviour
             if (alpha > 0.99f)
             {
                 toPaint = false;
-                sound.Stop();
             }
         }
     }
