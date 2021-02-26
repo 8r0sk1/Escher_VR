@@ -5,7 +5,7 @@ using UnityEngine;
 public class NPCInteraction : MonoBehaviour
 {
     private Animator animator;
-    private Renderer renderer;
+    private MeshRenderer render;
     private Material baseMat;
 
     private bool toPaint = false;
@@ -27,11 +27,11 @@ public class NPCInteraction : MonoBehaviour
     void Start()
     {
         animator = this.GetComponent<Animator>();
-        renderer = sheet.GetComponent<Renderer>();
+        render = sheet.GetComponent<MeshRenderer>();
 
-        renderer.material.shader = blendShader;
+        render.material.shader = blendShader;
 
-        baseMat = renderer.material;
+        baseMat = render.material;
 
         alpha = 0;
 
@@ -54,7 +54,7 @@ public class NPCInteraction : MonoBehaviour
         if (toPaint)
         {
             alpha = Mathf.Clamp(alpha + blendSpeed * Time.deltaTime, 0, 1);
-            renderer.material.SetFloat("_Blend", alpha);
+            render.material.SetFloat("_Blend", alpha);
             if (alpha > 0.99f)
             {
                 toPaint = false;
