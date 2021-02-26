@@ -6,7 +6,7 @@ public class Audioguide : MonoBehaviour
 {
     public LayerMask audioguideMask;
     public Camera playerCamera;
-    public float triggerDistance;
+    public float triggerDistance = 10;
     AudioSource audioguide = null;
 
     void Start()
@@ -19,8 +19,11 @@ public class Audioguide : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
-            if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward, triggerDistance, audioguideMask))
+            RaycastHit hit;
+            if (Physics.Raycast(playerCamera.transform.position, playerCamera.transform.forward,out hit, triggerDistance, audioguideMask))
             {
+                Debug.Log(hit.collider);
+                Debug.DrawLine(hit.point, playerCamera.transform.position);
                 audioguide.Play();
             }
         }
